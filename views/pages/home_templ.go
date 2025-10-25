@@ -31,7 +31,7 @@ func HomeContent() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div><h1 class=\"text-3xl md:text-4xl font-bold mb-4 text-gray-800\">Bem-vindo!</h1><p class=\"text-gray-700 text-lg md:text-xl leading-relaxed\">Conteúdo da página aqui. Você pode adicionar seções, imagens ou cards conforme precisar.</p></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-6xl mx-auto flex flex-col gap-6\"><div class=\"bg-white rounded-lg shadow-md p-6\"><div><h1 class=\"text-3xl md:text-4xl font-bold mb-4 text-gray-800\">Bem-vindo!</h1><p class=\"text-gray-700 text-lg md:text-xl leading-relaxed\">Conteúdo da página aqui. Você pode adicionar seções, imagens ou cards conforme precisar.</p></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
