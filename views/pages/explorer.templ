@@ -1,0 +1,24 @@
+package pages
+
+import "encontradev/views/components"
+
+templ ExplorerContent() {
+	<div class="max-w-6xl mx-auto flex flex-col gap-6">
+		<div class="bg-white rounded-lg shadow-md p-6">
+			<div>
+				<h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-800">Explorer!</h1>
+
+			</div>
+		</div>
+	</div>
+}
+
+templ Explorer(partial bool) {
+	if partial {
+		@ExplorerContent()  
+	} else {
+		@components.Layout() {
+				@ExplorerContent()
+		}
+	}
+}

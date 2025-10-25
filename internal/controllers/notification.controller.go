@@ -6,8 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HomeController(c *gin.Context) {
+func NotificationsController(c *gin.Context) {
 	partial := c.GetHeader("HX-Request") == "true"
-	homePage := pages.Home(partial)
-	homePage.Render(c, c.Writer)
+	notificationsPage := pages.Notifications(partial)
+	notificationsPage.Render(c, c.Writer)
 }

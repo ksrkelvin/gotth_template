@@ -10,7 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import "encontradev/views/components"
 
-func HomeContent() templ.Component {
+func NotificationsContent() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -31,7 +31,7 @@ func HomeContent() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-6xl mx-auto flex flex-col gap-6\"><div class=\"bg-white rounded-lg shadow-md p-6\"><div><h1 class=\"text-3xl md:text-4xl font-bold mb-4 text-gray-800\">Home!</h1><p class=\"text-gray-700 text-lg md:text-xl leading-relaxed\">Conteúdo da página aqui. Você pode adicionar seções, imagens ou cards conforme precisar.</p></div></div></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-6xl mx-auto flex flex-col gap-6\"><div class=\"bg-white rounded-lg shadow-md p-6\"><div><h1 class=\"text-3xl md:text-4xl font-bold mb-4 text-gray-800\">Notifications!</h1><p class=\"text-gray-700 text-lg md:text-xl leading-relaxed\">Conteúdo da página aqui. Você pode adicionar seções, imagens ou cards conforme precisar.</p></div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -39,7 +39,7 @@ func HomeContent() templ.Component {
 	})
 }
 
-func Home(partial bool) templ.Component {
+func Notifications(partial bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -61,7 +61,7 @@ func Home(partial bool) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		if partial {
-			templ_7745c5c3_Err = HomeContent().Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = NotificationsContent().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -78,7 +78,7 @@ func Home(partial bool) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = HomeContent().Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = NotificationsContent().Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
