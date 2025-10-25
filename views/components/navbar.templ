@@ -1,0 +1,41 @@
+package components
+
+templ Navbar() {
+	<header class="bg-white shadow-md">
+		<nav class="container mx-auto flex items-center justify-between p-4">
+			<div class="text-2xl font-bold text-gray-800">
+				MeuSite
+			</div>
+
+			<button id="menu-btn" class="block md:hidden text-gray-700 focus:outline-none">
+				<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+					viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					<path stroke-linecap="round" stroke-linejoin="round"
+						d="M4 6h16M4 12h16M4 18h16"></path>
+				</svg>
+			</button>
+
+			<div id="menu" class="hidden md:flex md:items-center w-full md:w-auto mt-4 md:mt-0">
+				<div class="flex items-center w-full md:w-96">
+					<input type="text" placeholder="Pesquisar..."
+						class="w-full rounded-l-md border border-gray-300 p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+					<button class="bg-blue-600 text-white p-2 rounded-r-md hover:bg-blue-700 transition">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+							viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+								d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+						</svg>
+					</button>
+				</div>
+			</div>
+		</nav>
+
+		<script>
+			const menuBtn = document.getElementById('menu-btn');
+			const menu = document.getElementById('menu');
+			menuBtn?.addEventListener('click', () => {
+				menu?.classList.toggle('hidden');
+			});
+		</script>
+	</header>
+}
