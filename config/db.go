@@ -10,6 +10,12 @@ import (
 )
 
 func (diino *Diino) ConnectDB() (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
+
 	pgUser := os.Getenv("POSTGRES_USER")
 	pgPass := os.Getenv("POSTGRES_PASSWORD")
 	pgDb := os.Getenv("POSTGRES_DB")

@@ -2,6 +2,7 @@ package main
 
 import (
 	"encontradev/config"
+	"encontradev/internal/controllers"
 	"log"
 	"path/filepath"
 
@@ -9,18 +10,18 @@ import (
 )
 
 func main() {
-	diino, err := config.Init()
-	if err != nil {
-		log.Fatal("❌ Erro ao tentar inciar diino: ", err.Error())
-	}
 
 	r := gin.Default()
 
 	staticPath, _ := filepath.Abs("static")
 	r.Static("/static", staticPath)
 
-	diino.ConnectDB()
-	diino.RegisterRoutes(r)
+	diino, err := config.Init(r)
+	if err != nil {
+		log.Fatal("❌ Erro ao tentar inciar diino: ", err.Error())
+	}
+
+	controllers.RegisterControllers(r, diino)
 
 	err = r.Run(":8080")
 	if err != nil {

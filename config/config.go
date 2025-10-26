@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encontradev/internal/auth"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +12,26 @@ import (
 type Diino struct {
 	DB     *gorm.DB
 	Routes *gin.Engine
+	Auth   *auth.Auth
 }
 
-func Init() (diino *Diino, err error) {
+func Init(r *gin.Engine) (diino *Diino, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("⚠️  Nenhum .env encontrado, usando variáveis do ambiente")
 	}
 
-	return &Diino{}, err
+	d := &Diino{}
+	d.ConnectDB()
+
+	d.Auth, err = auth.SetAuth(d.DB)
+	if err != nil {
+		log.Fatal("⚠️  Não foi possivel inicializar sistemas de auth")
+	}
+
+	return d, err
 }

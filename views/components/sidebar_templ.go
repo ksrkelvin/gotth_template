@@ -8,7 +8,9 @@ package components
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Sidebar() templ.Component {
+import "encontradev/internal/dto"
+
+func Sidebar(user dto.User) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,9 +31,92 @@ func Sidebar() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside id=\"sidebar\" class=\"bg-white w-64 h-full border-r border-gray-200 flex flex-col justify-between transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:static z-50\"><nav class=\"mt-6 flex-1\"><ul class=\"space-y-2\"><li><a hx-get=\"/\" hx-target=\"#main-content\" hx-swap=\"innerHTML\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 12l2-2m0 0l7-7 7 7M13 5v6h6m2 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6\"></path></svg> Home</a></li><li><a hx-get=\"/explorer\" hx-target=\"#main-content\" hx-swap=\"innerHTML\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7l4-4 4 4m0 10l-4 4-4-4\"></path></svg> Explorer</a></li><li><a hx-get=\"/notifications\" hx-target=\"#main-content\" hx-swap=\"innerHTML\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 17h5l-1.405-1.405M19 13V8a7 7 0 10-14 0v5l-1 1v1h16v-1l-1-1z\"></path></svg> Notifications</a></li></ul></nav><div class=\"border-t border-gray-200 p-4 flex items-center space-x-3 hover:bg-gray-100 rounded-lg cursor-pointer\"><img src=\"/static/images/avatar.png\" alt=\"Avatar\" class=\"h-10 w-10 rounded-full\"><div><p class=\"text-gray-900 font-semibold\">Kelvin Rodrigues</p><p class=\"text-gray-500 text-sm\">kelvin</p></div><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5 ml-auto text-gray-400\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M19 9l-7 7-7-7\"></path></svg></div></aside><script>\n\t\tfunction toggleSidebar() {\n\t\t\tconst sidebar = document.getElementById('sidebar');\n\t\t\tsidebar.classList.toggle('-translate-x-full');\n\t\t}\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<aside id=\"sidebar\" class=\"bg-white w-64 h-full border-r border-gray-200 flex flex-col justify-between transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:static z-50\"><nav class=\"mt-6 flex-1\"><ul class=\"space-y-2\"><li><a href=\"/\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 12l2-2m0 0l7-7 7 7M13 5v6h6m2 2v6a2 2 0 01-2 2H7a2 2 0 01-2-2v-6\"></path></svg> Home</a></li><li><a href=\"/explorer\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M8 7l4-4 4 4m0 10l-4 4-4-4\"></path></svg> Explorer</a></li><li><a href=\"/notifications\" class=\"flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors\"><svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-6 w-6 mr-3\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 17h5l-1.405-1.405M19 13V8a7 7 0 10-14 0v5l-1 1v1h16v-1l-1-1z\"></path></svg> Notifications</a></li></ul></nav><div class=\"border-t border-gray-200 p-4\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = isLoggedIn(user).Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></aside><script>\n\tfunction toggleSidebar() {\n\t\tconst sidebar = document.getElementById('sidebar');\n\t\tsidebar.classList.toggle('-translate-x-full');\n\t}\n</script>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func isLoggedIn(user dto.User) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var2 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var2 == nil {
+			templ_7745c5c3_Var2 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		if user != (dto.User{}) {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<div class=\"flex items-center space-x-3 hover:bg-gray-100 rounded-lg cursor-pointer p-2\"><img src=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 string
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(user.Avatar)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/sidebar.templ`, Line: 63, Col: 25}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" alt=\"Avatar\" class=\"h-10 w-10 rounded-full\"><div><p class=\"text-gray-900 font-semibold\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(user.Name)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/sidebar.templ`, Line: 65, Col: 54}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</p><p class=\"text-gray-500 text-sm\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(user.Email)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/components/sidebar.templ`, Line: 66, Col: 49}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</p></div></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<a href=\"/login\" class=\"block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors\">Entrar</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		return nil
 	})

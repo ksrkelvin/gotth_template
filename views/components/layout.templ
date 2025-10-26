@@ -1,6 +1,8 @@
 package components
 
-templ Layout() {
+import "encontradev/internal/dto"
+
+templ Layout(user dto.User, content templ.Component) {
 	<!DOCTYPE html>
 	<html lang="pt-br" class="h-full">
 		<head>
@@ -13,8 +15,10 @@ templ Layout() {
 		<body class="bg-gray-100 text-gray-900 h-full flex flex-col">
 			@Navbar()
 			<div class="flex flex-1 min-h-0">
-				@Sidebar()
-				<main id="main-content" class="flex-1 overflow-auto p-6 m-auto"></main>
+				@Sidebar(user)
+				<main id="main-content" class="flex-1 overflow-auto p-6">
+				@content
+				</main>
 			</div>
 			<footer class="bg-white p-4 text-center shadow-inner">
 				© 2025 diino
