@@ -3,7 +3,6 @@ package controllers
 import (
 	"encontradev/internal/dto"
 	"encontradev/views/pages"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +17,7 @@ func (c *Controllers) MeController() (err error) {
 	me := c.eng.Group("/me")
 	{
 		me.GET("/", c.GetMePage)
-		me.PUT("/")
+		me.PUT("/", c.UpdateUser)
 		me.PUT("/avatar", c.UpdateAvatar)
 	}
 
@@ -37,8 +36,6 @@ func (c *Controllers) GetMePage(ctx *gin.Context) {
 	if err != nil {
 		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
 	}
-
-	fmt.Println(user)
 
 	partial := ctx.GetHeader("HX-Request") == "true"
 
@@ -71,13 +68,8 @@ func (c *Controllers) UpdateUser(ctx *gin.Context) {
 	}
 	ctx.Set("user", user)
 
-	partial := ctx.GetHeader("HX-Request") == "true"
-
-	mePage := pages.Me(user, partial)
-	err = mePage.Render(ctx, ctx.Writer)
-	if err != nil {
-		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
-	}
+	ctx.Header("HX-Redirect", "/me")
+	ctx.Status(200)
 }
 
 func (c *Controllers) UpdateAvatar(ctx *gin.Context) {
@@ -100,6 +92,7 @@ func (c *Controllers) UpdateAvatar(ctx *gin.Context) {
 		return
 	}
 	ctx.Set("user", user)
-	ctx.Header("HX-Trigger", "userUpdated")
+
+	ctx.Header("HX-Redirect", "/me")
 	ctx.Status(200)
 }

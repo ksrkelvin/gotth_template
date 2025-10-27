@@ -34,7 +34,7 @@ func MeContent(user dto.UserResponse) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-md mx-auto mt-12 bg-white rounded-lg shadow-md p-6 flex flex-col items-center gap-6\"><form class=\"w-full flex flex-col gap-4\" hx-put=\"/me\" hx-target=\"this\" hx-swap=\"outerHTML\"><div class=\"flex flex-col items-center gap-2\"><button type=\"button\" id=\"avatar-button\" class=\"focus:outline-none\" onclick=\"document.getElementById('avatar-modal').classList.remove('hidden')\"><img src=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"max-w-md mx-auto mt-12 bg-white rounded-lg shadow-md p-6 flex flex-col items-center gap-6\"><form class=\"w-full flex flex-col gap-4\" hx-put=\"/me\" hx-target=\"#main-content\" hx-swap=\"outerHTML\"><div class=\"flex flex-col items-center gap-2\"><button type=\"button\" id=\"avatar-button\" class=\"focus:outline-none\" onclick=\"document.getElementById('avatar-modal').classList.remove('hidden')\"><img src=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -86,7 +86,20 @@ func MeContent(user dto.UserResponse) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border rounded p-2 w-full bg-gray-100\" readonly disabled></div><button type=\"submit\" class=\"mt-4 bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition-colors\">Salvar Alterações</button></form><div id=\"avatar-modal\" class=\"fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center hidden z-[9999]\"><div class=\"bg-white rounded-lg p-6 w-80 relative shadow-lg\"><h2 class=\"text-xl font-semibold mb-4\">Avatar Update</h2><form id=\"avatar-form\" hx-put=\"/me/avatar\" hx-target=\"#avatar-button\" hx-swap=\"outerHTML\" class=\"flex flex-col gap-4\"><input type=\"url\" name=\"avatar\" value=\"@user.Avatar\" placeholder=\"https://exemplo.com/avatar.jpg\" class=\"border rounded p-2 w-full\" required><div class=\"flex justify-end gap-2\"><button type=\"button\" class=\"px-4 py-2 border rounded hover:bg-gray-100\" onclick=\"document.getElementById('avatar-modal').classList.add('hidden')\">Cancelar</button> <button type=\"submit\" class=\"px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700\">Salvar</button></div></form><button class=\"absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl leading-none\" onclick=\"document.getElementById('avatar-modal').classList.add('hidden')\" aria-label=\"Fechar modal\">&times;</button></div></div></div><script>\n  document.body.addEventListener('userUpdated', () => {\n    document.getElementById('avatar-modal').classList.add('hidden');\n  });\n  </script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "\" class=\"border rounded p-2 w-full bg-gray-100\" readonly disabled></div><button type=\"submit\" class=\"mt-4 bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition-colors\">Salvar Alterações</button></form><div id=\"avatar-modal\" class=\"fixed inset-0 bg-gray-800 bg-opacity-60 flex items-center justify-center hidden z-[9999]\"><div class=\"bg-white rounded-lg p-6 w-80 relative shadow-lg\"><h2 class=\"text-xl font-semibold mb-4\">Avatar Update</h2><form id=\"avatar-form\" hx-put=\"/me/avatar\" hx-target=\"#main-content\" hx-swap=\"outerHTML\" class=\"flex flex-col gap-4\"><input type=\"url\" name=\"avatar\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var6 string
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(user.Avatar)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/pages/me.templ`, Line: 75, Col: 24}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" placeholder=\"https://exemplo.com/avatar.jpg\" class=\"border rounded p-2 w-full\" required><div class=\"flex justify-end gap-2\"><button type=\"button\" class=\"px-4 py-2 border rounded hover:bg-gray-100\" onclick=\"document.getElementById('avatar-modal').classList.add('hidden')\">Cancelar</button> <button type=\"submit\" class=\"px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700\">Salvar</button></div></form><button class=\"absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl leading-none\" onclick=\"document.getElementById('avatar-modal').classList.add('hidden')\" aria-label=\"Fechar modal\">&times;</button></div></div></div><script>\n  document.body.addEventListener('userUpdated', () => {\n    document.getElementById('avatar-modal').classList.add('hidden');\n  });\n  </script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -110,9 +123,9 @@ func Me(user dto.UserResponse, partial bool) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var6 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var6 == nil {
-			templ_7745c5c3_Var6 = templ.NopComponent
+		templ_7745c5c3_Var7 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var7 == nil {
+			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
 		if partial {

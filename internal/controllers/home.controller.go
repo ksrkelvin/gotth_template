@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encontradev/views/pages"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,7 +33,7 @@ func (c *Controllers) GetHomePage(ctx *gin.Context) {
 		return
 	}
 
-	partial := ctx.GetHeader("HX-Request") == "true"
+	partial := strings.ToLower(ctx.GetHeader("HX-Request")) == "true"
 
 	homePage := pages.Home(user, partial)
 	err = homePage.Render(ctx, ctx.Writer)

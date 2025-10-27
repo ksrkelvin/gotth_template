@@ -10,7 +10,7 @@ templ MeContent(user dto.UserResponse) {
 		<form
 			class="w-full flex flex-col gap-4"
 			hx-put="/me"
-			hx-target="this"
+			hx-target="#main-content"
 			hx-swap="outerHTML"
 		>
 			<div class="flex flex-col items-center gap-2">
@@ -65,14 +65,14 @@ templ MeContent(user dto.UserResponse) {
 				<form
 					id="avatar-form"
 					hx-put="/me/avatar"
-					hx-target="#avatar-button"
+					hx-target="#main-content"
 					hx-swap="outerHTML"
 					class="flex flex-col gap-4"
 				>
 					<input
 						type="url"
 						name="avatar"
-						value="@user.Avatar"
+						value={user.Avatar}
 						placeholder="https://exemplo.com/avatar.jpg"
 						class="border rounded p-2 w-full"
 						required

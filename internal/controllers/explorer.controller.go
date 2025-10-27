@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encontradev/views/pages"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,7 +33,7 @@ func (c *Controllers) GetExplorerPage(ctx *gin.Context) {
 		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
 	}
 
-	partial := ctx.GetHeader("HX-Request") == "true"
+	partial := strings.ToLower(ctx.GetHeader("HX-Request")) == "true"
 
 	explorerPage := pages.Explorer(user, partial)
 	err = explorerPage.Render(ctx, ctx.Writer)

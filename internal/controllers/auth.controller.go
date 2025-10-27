@@ -3,6 +3,7 @@ package controllers
 import (
 	"encontradev/internal/dto"
 	"encontradev/views/pages"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -58,7 +59,7 @@ func (a *Controllers) GetLoginPage(ctx *gin.Context) {
 		}
 	}()
 
-	partial := ctx.GetHeader("HX-Request") == "true"
+	partial := strings.ToLower(ctx.GetHeader("HX-Request")) == "true"
 
 	loginPage := pages.Login(dto.UserResponse{}, partial)
 	err := loginPage.Render(ctx, ctx.Writer)
