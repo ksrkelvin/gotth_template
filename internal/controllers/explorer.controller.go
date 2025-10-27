@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +27,16 @@ func (c *Controllers) GetExplorerPage(ctx *gin.Context) {
 		}
 	}()
 
-	explorerPage := pages.Explorer(dto.UserResponse{})
-	explorerPage.Render(ctx, ctx.Writer)
+	user, err := c.service.GetUser(ctx)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
+	}
+
+	partial := ctx.GetHeader("HX-Request") == "true"
+
+	explorerPage := pages.Explorer(user, partial)
+	err = explorerPage.Render(ctx, ctx.Writer)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
+	}
 }

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
@@ -12,10 +13,10 @@ func (c *Controllers) AuthController() (err error) {
 			err = r.(error)
 		}
 	}()
-	login := c.eng.Group("/login")
-	{
-		login.GET("/", c.GetLoginPage)
-	}
+
+	c.eng.GET("/me", c.GetMePage)
+	c.eng.GET("/login", c.GetLoginPage)
+	c.eng.POST("/logout", c.Logout)
 
 	auth := c.eng.Group("/auth")
 	{
@@ -28,6 +29,28 @@ func (c *Controllers) AuthController() (err error) {
 	return
 }
 
+func (a *Controllers) Logout(ctx *gin.Context) {
+	defer func() {
+		if r := recover(); r != nil {
+			err := r.(error)
+			ctx.String(500, "Erro inesperado: "+err.Error())
+		}
+	}()
+
+	ctx.SetCookie(
+		"jwt",
+		"",
+		-1,
+		"/",
+		"",
+		false,
+		true,
+	)
+
+	ctx.Header("HX-Redirect", "/")
+	ctx.Status(200)
+}
+
 func (a *Controllers) GetLoginPage(ctx *gin.Context) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -36,6 +59,34 @@ func (a *Controllers) GetLoginPage(ctx *gin.Context) {
 		}
 	}()
 
-	loginPage := pages.Login()
-	loginPage.Render(ctx, ctx.Writer)
+	partial := ctx.GetHeader("HX-Request") == "true"
+
+	loginPage := pages.Login(dto.UserResponse{}, partial)
+	err := loginPage.Render(ctx, ctx.Writer)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
+	}
+}
+
+func (c *Controllers) GetMePage(ctx *gin.Context) {
+	defer func() {
+		if r := recover(); r != nil {
+			err := r.(error)
+			ctx.String(500, "Erro inesperado: "+err.Error())
+		}
+	}()
+
+	user, err := c.service.GetUser(ctx)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
+	}
+
+	partial := ctx.GetHeader("HX-Request") == "true"
+
+	mePage := pages.Me(user, partial)
+	err = mePage.Render(ctx, ctx.Writer)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
+	}
+
 }

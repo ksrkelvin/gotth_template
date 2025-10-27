@@ -13,6 +13,10 @@ templ ExplorerContent() {
 	</div>
 }
 
-templ Explorer(user dto.UserResponse) {
-		@components.Layout(user, ExplorerContent())
+templ Explorer(user dto.UserResponse, partial bool) {
+    if partial {
+        @ExplorerContent()
+    } else {
+        @components.Layout(user, ExplorerContent())
+    }
 }

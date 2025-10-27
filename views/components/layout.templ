@@ -3,26 +3,26 @@ package components
 import "encontradev/internal/dto"
 
 templ Layout(user dto.UserResponse, content templ.Component) {
-	<!DOCTYPE html>
-	<html lang="pt-br" class="h-full">
-		<head>
-			<meta charset="UTF-8"/>
-			<title>DIINO</title>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<link href="/static/css/output.css" rel="stylesheet"/>
-			<script src="/static/js/htmx.min.js"></script>
-		</head>
-		<body class="bg-gray-100 text-gray-900 h-full flex flex-col">
-			@Navbar()
-			<div class="flex flex-1 min-h-0">
-				@Sidebar(user)
-				<main id="main-content" class="flex-1 overflow-auto p-6">
-				@content
-				</main>
-			</div>
-			<footer class="bg-white p-4 text-center shadow-inner">
-				© 2025 diino
-			</footer>
-		</body>
-	</html>
+    <!DOCTYPE html>
+    <html lang="pt-br" class="h-full">
+        <head>
+            <meta charset="UTF-8"/>
+            <title>DIINO</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <link href="/static/css/output.css" rel="stylesheet"/>
+            <script src="/static/js/htmx.min.js"></script>
+        </head>
+        <body class="bg-gray-100 text-gray-900 h-full flex flex-col">
+            @Navbar()
+            <div class="flex flex-1 min-h-0">
+                @Sidebar(user)
+                <main id="main-content" class="flex-1 overflow-auto p-6">
+                    @content
+                </main>
+            </div>
+            <footer class="bg-white p-4 text-center shadow-inner">
+                © 2025 diino
+            </footer>
+        </body>
+    </html>
 }

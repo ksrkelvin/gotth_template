@@ -21,7 +21,7 @@ func main() {
 		log.Fatal("❌ Erro ao tentar inciar diino: ", err.Error())
 	}
 
-	diino.Controllers, err = controllers.RegisterControllers(r, diino.Auth)
+	diino.Controllers, err = controllers.RegisterControllers(r, diino.Auth, diino.Service)
 	if err != nil {
 		log.Fatal("⚠️  Não foi possivel inicializar sistemas de services")
 	}

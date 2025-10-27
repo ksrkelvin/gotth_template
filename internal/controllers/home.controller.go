@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
@@ -27,6 +26,17 @@ func (c *Controllers) GetHomePage(ctx *gin.Context) {
 		}
 	}()
 
-	homePage := pages.Home(dto.UserResponse{})
-	homePage.Render(ctx, ctx.Writer)
+	user, err := c.service.GetUser(ctx)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
+		return
+	}
+
+	partial := ctx.GetHeader("HX-Request") == "true"
+
+	homePage := pages.Home(user, partial)
+	err = homePage.Render(ctx, ctx.Writer)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
+	}
 }

@@ -13,6 +13,10 @@ templ HomeContent() {
 	</div>
 }
 
-templ Home(user dto.UserResponse){
-		@components.Layout(user, HomeContent())
+templ Home(user dto.UserResponse, partial bool) {
+    if partial {
+        @HomeContent()
+    } else {
+        @components.Layout(user, HomeContent())
+    }
 }

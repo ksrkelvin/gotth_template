@@ -70,9 +70,14 @@ func (p *Auth) JWTMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("user", map[string]string{
-			"email": claims.Email,
-		})
+		user, err := p.Repository.GetUserByEmail(claims.Email)
+		if err != nil {
+			c.Set("user", nil)
+			c.Next()
+			return
+		}
+
+		c.Set("user", user)
 		c.Next()
 	}
 }

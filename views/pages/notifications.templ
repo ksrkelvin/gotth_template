@@ -13,6 +13,10 @@ templ NotificationsContent() {
 	</div>
 }
 
-templ Notifications(user dto.UserResponse) {
-		@components.Layout(user, NotificationsContent())
+templ Notifications(user dto.UserResponse, partial bool) {
+    if partial {
+        @NotificationsContent()
+    } else {
+        @components.Layout(user, NotificationsContent())
+    }
 }

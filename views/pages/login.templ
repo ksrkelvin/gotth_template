@@ -36,6 +36,10 @@ templ LoginContent() {
 	</div>
 }
 
-templ Login() {
-		@components.Layout(dto.UserResponse{}, LoginContent())
+templ Login(user dto.UserResponse, partial bool) {
+    if partial {
+        @LoginContent()
+    } else {
+        @components.Layout(user, LoginContent())
+    }
 }

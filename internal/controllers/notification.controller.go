@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
@@ -28,6 +27,16 @@ func (c *Controllers) GetNotificationsPage(ctx *gin.Context) {
 		}
 	}()
 
-	notificationsPage := pages.Notifications(dto.UserResponse{})
-	notificationsPage.Render(ctx, ctx.Writer)
+	user, err := c.service.GetUser(ctx)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
+	}
+
+	partial := ctx.GetHeader("HX-Request") == "true"
+
+	notificationsPage := pages.Notifications(user, partial)
+	err = notificationsPage.Render(ctx, ctx.Writer)
+	if err != nil {
+		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
+	}
 }
