@@ -1,43 +1,41 @@
 package controllers
 
 import (
-	"encontradev/config"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Auth struct {
-	diino *config.Diino
-}
-
-func AuthController(r *gin.Engine, diino *config.Diino) (err error) {
+func (c *Controllers) AuthController() (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = r.(error)
 		}
 	}()
-	a := &Auth{
-		diino: diino,
-	}
-
-	login := r.Group("/login")
+	login := c.eng.Group("/login")
 	{
-		login.GET("/", a.GetLoginPage)
+		login.GET("/", c.GetLoginPage)
 	}
 
-	auth := r.Group("/auth")
+	auth := c.eng.Group("/auth")
 	{
 		google := auth.Group("/google")
 		{
-			google.GET("/", a.diino.Auth.GoogleLogin)
-			google.GET("/callback", a.diino.Auth.GoogleCallback)
+			google.GET("/", c.auth.GoogleLogin)
+			google.GET("/callback", c.auth.GoogleCallback)
 		}
 	}
 	return
 }
 
-func (a *Auth) GetLoginPage(c *gin.Context) {
+func (a *Controllers) GetLoginPage(ctx *gin.Context) {
+	defer func() {
+		if r := recover(); r != nil {
+			err := r.(error)
+			ctx.String(500, "Erro inesperado: "+err.Error())
+		}
+	}()
+
 	loginPage := pages.Login()
-	loginPage.Render(c, c.Writer)
+	loginPage.Render(ctx, ctx.Writer)
 }

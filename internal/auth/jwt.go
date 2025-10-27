@@ -8,7 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (p *Auth) GenerateJWT(email string, issuer string) (string, error) {
+func (p *Auth) GenerateJWT(email string, issuer string) (token string, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		Email: email,
@@ -18,8 +23,8 @@ func (p *Auth) GenerateJWT(email string, issuer string) (string, error) {
 		},
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(p.Secret)
+	tokenJWT := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := tokenJWT.SignedString(p.Secret)
 	if err != nil {
 		return "", err
 	}
@@ -27,10 +32,15 @@ func (p *Auth) GenerateJWT(email string, issuer string) (string, error) {
 	return tokenString, nil
 }
 
-func (p *Auth) ValidateJWT(tokenString string) (*Claims, error) {
-	claims := &Claims{}
+func (p *Auth) ValidateJWT(tokenString string) (claims *Claims, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = r.(error)
+		}
+	}()
+	c := &Claims{}
 
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, c, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("invalid signing method")
 		}
@@ -41,7 +51,7 @@ func (p *Auth) ValidateJWT(tokenString string) (*Claims, error) {
 		return nil, err
 	}
 
-	return claims, nil
+	return c, nil
 }
 
 func (p *Auth) JWTMiddleware() gin.HandlerFunc {

@@ -1,35 +1,33 @@
 package controllers
 
 import (
-	"encontradev/config"
 	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Explorer struct {
-	diino *config.Diino
-}
-
-func ExplorerController(r *gin.Engine, diino *config.Diino) (err error) {
+func (c *Controllers) ExplorerController() (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = r.(error)
 		}
 	}()
-	e := &Explorer{
-		diino: diino,
-	}
-
-	explorer := r.Group("/explorer")
+	explorer := c.eng.Group("/explorer")
 	{
-		explorer.GET("/", e.GetExplorerPage)
+		explorer.GET("/", c.GetExplorerPage)
 	}
 	return
 }
 
-func (e *Explorer) GetExplorerPage(c *gin.Context) {
-	explorerPage := pages.Explorer(dto.User{})
-	explorerPage.Render(c, c.Writer)
+func (c *Controllers) GetExplorerPage(ctx *gin.Context) {
+	defer func() {
+		if r := recover(); r != nil {
+			err := r.(error)
+			ctx.String(500, "Erro inesperado: "+err.Error())
+		}
+	}()
+
+	explorerPage := pages.Explorer(dto.UserResponse{})
+	explorerPage.Render(ctx, ctx.Writer)
 }

@@ -1,33 +1,32 @@
 package controllers
 
 import (
-	"encontradev/config"
 	"encontradev/internal/dto"
 	"encontradev/views/pages"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Home struct {
-	diino *config.Diino
-}
-
-func HomeController(r *gin.Engine, diino *config.Diino) (err error) {
+func (c *Controllers) HomeController() (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = r.(error)
 		}
 	}()
-	h := &Home{
-		diino: diino,
-	}
 
-	r.GET("/", h.GetHomePage)
+	c.eng.GET("/", c.GetHomePage)
 
 	return
 }
 
-func (e *Home) GetHomePage(c *gin.Context) {
-	homePage := pages.Home(dto.User{})
-	homePage.Render(c, c.Writer)
+func (c *Controllers) GetHomePage(ctx *gin.Context) {
+	defer func() {
+		if r := recover(); r != nil {
+			err := r.(error)
+			ctx.String(500, "Erro inesperado: "+err.Error())
+		}
+	}()
+
+	homePage := pages.Home(dto.UserResponse{})
+	homePage.Render(ctx, ctx.Writer)
 }

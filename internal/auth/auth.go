@@ -1,17 +1,17 @@
 package auth
 
 import (
+	"encontradev/internal/repository"
 	"os"
 
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"gorm.io/gorm"
 )
 
 type Auth struct {
 	Secret            []byte
-	DB                *gorm.DB
+	Repository        *repository.Repository
 	GoogleOauthConfig *oauth2.Config
 	GithubOauthConfig *oauth2.Config
 }
@@ -21,7 +21,7 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-func SetAuth(db *gorm.DB) (auth *Auth, err error) {
+func SetAuth(repository *repository.Repository) (auth *Auth, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = r.(error)
@@ -44,7 +44,7 @@ func SetAuth(db *gorm.DB) (auth *Auth, err error) {
 	a := &Auth{
 		Secret:            []byte(secret),
 		GoogleOauthConfig: googleOauthConfig,
-		DB:                db,
+		Repository:        repository,
 	}
 	return a, err
 }

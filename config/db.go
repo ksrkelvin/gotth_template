@@ -1,6 +1,7 @@
 package config
 
 import (
+	"encontradev/internal/models"
 	"fmt"
 	"log"
 	"os"
@@ -35,7 +36,7 @@ func (diino *Diino) ConnectDB() (err error) {
 		log.Fatal("❌ Falha ao conectar no banco:", err)
 	}
 
-	err = database.AutoMigrate()
+	err = database.AutoMigrate(models.User{})
 	if err != nil {
 		log.Fatal("❌ Falha ao migrar tabelas:", err)
 	}

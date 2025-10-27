@@ -2,6 +2,9 @@ package config
 
 import (
 	"encontradev/internal/auth"
+	"encontradev/internal/controllers"
+	"encontradev/internal/repository"
+	"encontradev/internal/service"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -10,9 +13,12 @@ import (
 )
 
 type Diino struct {
-	DB     *gorm.DB
-	Routes *gin.Engine
-	Auth   *auth.Auth
+	DB          *gorm.DB
+	Routes      *gin.Engine
+	Auth        *auth.Auth
+	Controllers *controllers.Controllers
+	Repository  *repository.Repository
+	Service     *service.Service
 }
 
 func Init(r *gin.Engine) (diino *Diino, err error) {
@@ -28,9 +34,19 @@ func Init(r *gin.Engine) (diino *Diino, err error) {
 	d := &Diino{}
 	d.ConnectDB()
 
-	d.Auth, err = auth.SetAuth(d.DB)
+	d.Repository, err = repository.RegisterRepository(d.DB)
+	if err != nil {
+		log.Fatal("⚠️  Não foi possivel inicializar sistemas de repository")
+	}
+
+	d.Auth, err = auth.SetAuth(d.Repository)
 	if err != nil {
 		log.Fatal("⚠️  Não foi possivel inicializar sistemas de auth")
+	}
+
+	d.Service, err = service.RegisterService(d.Repository)
+	if err != nil {
+		log.Fatal("⚠️  Não foi possivel inicializar sistemas de services")
 	}
 
 	return d, err

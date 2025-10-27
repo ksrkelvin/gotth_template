@@ -13,6 +13,6 @@ templ NotificationsContent() {
 	</div>
 }
 
-templ Notifications(user dto.User) {
+templ Notifications(user dto.UserResponse) {
 		@components.Layout(user, NotificationsContent())
 }

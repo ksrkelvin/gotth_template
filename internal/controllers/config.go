@@ -1,22 +1,33 @@
 package controllers
 
 import (
-	"encontradev/config"
+	"encontradev/internal/auth"
 
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterControllers(r *gin.Engine, diino *config.Diino) (err error) {
+type Controllers struct {
+	auth *auth.Auth
+	eng  *gin.Engine
+}
+
+func RegisterControllers(eng *gin.Engine, auth *auth.Auth) (controllers *Controllers, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = r.(error)
 		}
 	}()
-	AuthController(r, diino)
 
-	HomeController(r, diino)
-	ExplorerController(r, diino)
-	NotificationsController(r, diino)
+	c := &Controllers{
+		eng:  eng,
+		auth: auth,
+	}
 
-	return
+	c.AuthController()
+
+	c.HomeController()
+	c.ExplorerController()
+	c.NotificationsController()
+
+	return c, err
 }

@@ -21,11 +21,14 @@ func main() {
 		log.Fatal("❌ Erro ao tentar inciar diino: ", err.Error())
 	}
 
-	controllers.RegisterControllers(r, diino)
+	diino.Controllers, err = controllers.RegisterControllers(r, diino.Auth)
+	if err != nil {
+		log.Fatal("⚠️  Não foi possivel inicializar sistemas de services")
+	}
 
 	err = r.Run(":8080")
 	if err != nil {
-		log.Fatal("❌ Erro ao iniciar encontraDev: ", err.Error())
+		log.Fatal("❌ Erro ao iniciar server: ", err.Error())
 	}
 
 	log.Println("🚀 Servidor rodando em http://localhost:8080")
