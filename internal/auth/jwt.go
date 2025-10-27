@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"encontradev/internal/dto"
 	"fmt"
 	"time"
 
@@ -77,7 +78,14 @@ func (p *Auth) JWTMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		c.Set("user", user)
+		userResponse := dto.UserResponse{
+			ID:     user.ID,
+			Name:   user.Name,
+			Email:  user.Email,
+			Avatar: user.Avatar,
+		}
+
+		c.Set("user", userResponse)
 		c.Next()
 	}
 }

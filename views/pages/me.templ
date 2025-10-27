@@ -1,31 +1,21 @@
 package pages
 
 import (
-	"encontradev/internal/dto"
-
-	"encontradev/views/components"
+  "encontradev/internal/dto"
+  "encontradev/views/components"
 )
 
 templ MeContent(user dto.UserResponse) {
-	<div class="max-w-md mx-auto mt-12 bg-white rounded-lg shadow-md p-6 flex flex-col items-center gap-4">
-		<img src={ user.Avatar } alt="Avatar" class="h-24 w-24 rounded-full border-4 border-blue-500"/>
-		<h1 class="text-2xl font-bold text-gray-800">{ user.Name }</h1>
-		<p class="text-gray-600">{ user.Email }</p>
-		<form hx-post="/logout" hx-target="#main-content" hx-swap="innerHTML" class="w-full mt-4">
-			<button
-				type="submit"
-				class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition-colors"
-			>
-				Logout
-			</button>
-		</form>
-	</div>
+  <div class="max-w-md mx-auto mt-12 bg-white rounded-lg shadow-md p-6 flex flex-col items-center gap-6">
+  
+  </div>
+
 }
 
 templ Me(user dto.UserResponse, partial bool) {
-	if partial {
-		@MeContent(user)
-	} else {
-		@components.Layout(user, MeContent(user))
-	}
+  if partial {
+    @MeContent(user)
+  } else {
+    @components.Layout(user, MeContent(user))
+  }
 }

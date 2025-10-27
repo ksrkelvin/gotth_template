@@ -34,7 +34,7 @@ func (r *Repository) CreateUser(user dto.UserCreateRequest) (userModel models.Us
 	return newUser, nil
 }
 
-func (r *Repository) GetUserByEmail(email string) (models.User, error) {
+func (r *Repository) GetUserByEmail(email string) (userModel models.User, err error) {
 	var user models.User
 	if err := r.DB.Where("email = ?", email).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -47,4 +47,9 @@ func (r *Repository) GetUserByEmail(email string) (models.User, error) {
 
 func (r *Repository) CheckPassword(hash string, password string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
+}
+
+func (r *Repository) UpdateUser(user models.User) error {
+	result := r.DB.Save(&user)
+	return result.Error
 }

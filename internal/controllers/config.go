@@ -26,12 +26,12 @@ func RegisterControllers(eng *gin.Engine, auth *auth.Auth, service *service.Serv
 		service: service,
 	}
 
+	eng.Use(auth.JWTMiddleware())
+
 	err = c.AuthController()
 	if err != nil {
 		return
 	}
-
-	eng.Use(auth.JWTMiddleware())
 
 	err = c.HomeController()
 	if err != nil {
@@ -42,6 +42,10 @@ func RegisterControllers(eng *gin.Engine, auth *auth.Auth, service *service.Serv
 		return
 	}
 	err = c.NotificationsController()
+	if err != nil {
+		return
+	}
+	err = c.MeController()
 	if err != nil {
 		return
 	}

@@ -2,7 +2,6 @@ package service
 
 import (
 	"encontradev/internal/dto"
-	"encontradev/internal/models"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,15 +19,15 @@ func (s *Service) GetUser(ctx *gin.Context) (userDto dto.UserResponse, err error
 	return userResponse, err
 }
 
-func (controller *Service) GetUserFromContext(c *gin.Context) (userModel models.User) {
+func (controller *Service) GetUserFromContext(c *gin.Context) (userModel dto.UserResponse) {
 	user, exists := c.Get("user")
 	if !exists || user == nil {
-		return models.User{}
+		return dto.UserResponse{}
 	}
 
-	u, ok := user.(models.User)
+	u, ok := user.(dto.UserResponse)
 	if !ok {
-		return models.User{}
+		return dto.UserResponse{}
 	}
 
 	return u

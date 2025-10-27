@@ -14,7 +14,6 @@ func (c *Controllers) AuthController() (err error) {
 		}
 	}()
 
-	c.eng.GET("/me", c.GetMePage)
 	c.eng.GET("/login", c.GetLoginPage)
 	c.eng.POST("/logout", c.Logout)
 
@@ -66,27 +65,4 @@ func (a *Controllers) GetLoginPage(ctx *gin.Context) {
 	if err != nil {
 		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
 	}
-}
-
-func (c *Controllers) GetMePage(ctx *gin.Context) {
-	defer func() {
-		if r := recover(); r != nil {
-			err := r.(error)
-			ctx.String(500, "Erro inesperado: "+err.Error())
-		}
-	}()
-
-	user, err := c.service.GetUser(ctx)
-	if err != nil {
-		ctx.String(500, "Erro ao tentar obter user: "+err.Error())
-	}
-
-	partial := ctx.GetHeader("HX-Request") == "true"
-
-	mePage := pages.Me(user, partial)
-	err = mePage.Render(ctx, ctx.Writer)
-	if err != nil {
-		ctx.String(500, "Erro ao tentar renderizar pagina: "+err.Error())
-	}
-
 }
